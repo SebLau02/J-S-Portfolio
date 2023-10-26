@@ -18,8 +18,6 @@ ul {
 	list-style: none;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
-
 @font-face {
 	font-family: "blackrough_demoregular";
 	src: url("assets/font/demon/blackroughdemoregular-webfont.woff2")
@@ -46,7 +44,7 @@ ul {
 body {
 	background: url("https://images.unsplash.com/photo-1499417267106-45cebb7187c9?auto=format&fit=crop&q=80&w=1619&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 	background-repeat: no-repeat;
-	background-position: center;
+	background-position: 50% 70%;
 	background-size: cover;
 	background-attachment: fixed;
 }
@@ -87,6 +85,12 @@ section h2::after {
 	margin: 6vh 0;
 }
 
+.main-container {
+	display: none;
+}
+.main-container.active {
+	display: block;
+}
 /*---------------- profile ----------------*/
 
 .profile-image {
@@ -97,6 +101,7 @@ section h2::after {
 	object-fit: cover;
 	border-radius: 1vw;
 	align-self: center;
+	animation: fadeIn 1s 0.2s ease forwards;
 }
 .description-container {
 	align-self: center;
@@ -105,6 +110,7 @@ section h2::after {
 }
 .description-container h1,
 p {
+	opacity: 0;
 	margin: 2vw 3vw;
 }
 .description-container h1 span {
@@ -114,6 +120,34 @@ p {
 	color: var(--golden-yellow);
 }
 
+.description-container h1 {
+	animation: slideIn 0.8s 0.3s ease forwards;
+}
+.description-container :nth-child(2) {
+	animation: slideIn 0.8s 0.5s ease forwards;
+}
+.description-container :nth-child(3) {
+	animation: slideIn 0.8s 0.7s ease forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(100px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
 /*---------------- parcours ----------------*/
 
 .scolaire,
@@ -131,6 +165,12 @@ p {
 .professionnel h3 {
 	color: var(--golden-yellow);
 }
+.scolaire ul li,
+.professionnel ul li {
+	transform: translateX(-100px);
+	opacity: 0;
+	transition: all 0.5s ease;
+}
 
 /*---------------- theme ----------------*/
 
@@ -146,6 +186,8 @@ p {
 	border-radius: 1vw;
 	overflow: hidden;
 	margin: 1vw;
+	transform: scale(0);
+	transition: transform 0.5s ease;
 }
 
 .theme-image {
@@ -188,6 +230,9 @@ p {
 	border: 1px solid var(--dark-theme);
 	border-radius: 1vw;
 	background-color: var(--white-theme);
+	transform: translateX(100px);
+	opacity: 0;
+	transition: all 0.5s ease;
 }
 .formulaire input {
 	width: 80%;
@@ -209,6 +254,10 @@ p {
 	min-width: 200px;
 	text-align: justify;
 	align-self: self-start;
+
+	transform: translateX(-100px);
+	opacity: 0;
+	transition: all 0.5s ease;
 }
 .formulaire label {
 	color: var(--dark-theme);
@@ -223,12 +272,15 @@ p {
 /*---------------- footer ----------------*/
 
 footer {
-	display: flex;
+	display: none;
 	justify-content: space-around;
 	align-items: center;
 	min-height: 10vh;
 	font-size: clamp(1.2rem, 2vw, 1.6rem);
 	background-color: var(--dark-theme);
+}
+footer.active {
+	display: flex;
 }
 
 .social-container {
@@ -238,4 +290,46 @@ footer > ul > li > a > img {
 	width: 3vw;
 	min-width: 25px;
 	margin: 1.5vw;
+}
+
+/*---------------- loader ----------------*/
+
+.loader-container {
+	width: 100%;
+	height: 100vh;
+	background: #333333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.loader-container.active {
+	display: none;
+}
+
+@keyframes light {
+	to {
+		stroke-dashoffset: 244.35121154785156px;
+	}
+}
+
+svg {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.move {
+	stroke-dasharray: 40px;
+	z-index: 2;
+	animation: light 2s ease-out infinite;
+}
+.body {
+	stroke-dasharray: 10000px;
+}
+
+.annecdote-container {
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
